@@ -15,5 +15,10 @@ public class HomeController {
     @GetMapping("/home")
     public String getHome() {
         return this.str;
-    }    
+    }
+    @GetMapping("/stephen")
+    public String getStephenName(){
+        return "Stephen Tayag's name.";
+    }
+
 }
