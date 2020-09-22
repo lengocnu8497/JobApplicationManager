@@ -21,4 +21,9 @@ public class HomeController {
         return "Stephen Tayag's name.";
     }
 
+    @GetMapping("/nu")
+    public String getNuName(){
+        return "Nu Le's name.";
+    }
+
 }
