@@ -26,4 +26,9 @@ public class HomeController {
         return "Nu Le's name.";
     }
 
+    @GetMapping("/tony")
+    public String getTonyName(){
+        return "Tony Truong's name.";
+    }
+
 }
