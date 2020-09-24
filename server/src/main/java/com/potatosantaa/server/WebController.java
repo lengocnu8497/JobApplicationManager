@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class HomeController {
+public class WebController {
     
     String str = "Testing controller";
 
@@ -46,7 +46,7 @@ public class HomeController {
         System.out.println(softwareJobs);
         return softwareJobs;
     }
-
+    
 
 
 }
