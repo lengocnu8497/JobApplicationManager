@@ -1,4 +1,4 @@
-package com.potatosantaa.server;
+package com.potatosantaa.server.controllers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
