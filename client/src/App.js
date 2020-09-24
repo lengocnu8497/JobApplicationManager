@@ -10,8 +10,7 @@ export default function App() {
         <Switch>
           <Route exact path='/' component={Home}/>   
           <Route exact path='/stephen' component={Stephen}/>   
-          <Route exact path='/nu' component={Nu}/>     
-          <Route exact path='/Alisar' component={Alisar}/>                         
+          <Route exact path='/nu' component={Nu}/>                           
         </Switch>        
     </BrowserRouter>   
   );

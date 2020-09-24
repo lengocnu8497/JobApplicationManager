@@ -42,11 +42,20 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<!-- Web Scraping Tool -->
 			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.13.1</version>
+		</dependency>				
+		<dependency>
+			<!-- Convert CSV to JSON and viceversa -->
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.11.2</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
