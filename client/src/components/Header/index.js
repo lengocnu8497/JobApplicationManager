@@ -1,6 +1,6 @@
 /**
- *  Index files are searched by default, importing Header.js 
- *  from anywhere else will call this file
-**/ 
+ * @description Header contains two children: SideDrawer and TopMenu
+ *              
+ */
 import Header from './Header';
 export default Header;
