@@ -13,28 +13,28 @@ const useStyles = makeStyles({
     }
 });
 
+const tabs = [
+    {
+        icon: <PersonPinIcon />,
+        ariaLabel:"person"
+    },
+    {
+        icon: <PersonPinIcon />,
+        ariaLabel:"person"
+    },
+    {
+        icon: <PersonPinIcon />,
+        ariaLabel:"person"
+    }
+];
+
 export default function TopMenu() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
   
     const handleChange = (event, newValue) => {
       setValue(newValue);
-    };
-    
-    const tabs = [
-        {
-            icon: <PersonPinIcon />,
-            ariaLabel:"person"
-        },
-        {
-            icon: <PersonPinIcon />,
-            ariaLabel:"person"
-        },
-        {
-            icon: <PersonPinIcon />,
-            ariaLabel:"person"
-        }
-    ];
+    };    
 
     return (      
         <Tabs
@@ -42,8 +42,9 @@ export default function TopMenu() {
             onChange={handleChange}    
             className={classes.root}        
         >
-            {tabs.map(tab => (
+            {tabs.map((tab, index) => (
                 <Tab
+                    key={`${tab}${index}`}
                     icon={tab.icon}
                     aria-label={tab.ariaLabel}
                     className={classes.tab}
