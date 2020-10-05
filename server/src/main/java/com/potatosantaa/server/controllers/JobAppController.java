@@ -4,26 +4,31 @@ import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.concurrent.ExecutionException;
 
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@RequestMapping("/jobapp")
 public class JobAppController {
 
     @Autowired
     JobService jobService;
 
-    @GetMapping("/jobapp")
+    @GetMapping("/home")
     public HashMap getAllJobApps(){
         return jobService.getAllJobApps();
     }
 
-    @GetMapping("/jobapp/{id}")
+    @GetMapping("/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID){
         return jobService.getJobAppById(jobAppID);
     }
 
+
+    
+    // Mappings for HashMap methods ==> will be deleted later
     @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
     public void addJobApp(@RequestBody JobApp jobApp){
         jobService.addJobApp(jobApp);
@@ -40,5 +45,26 @@ public class JobAppController {
     }
 
 
+
+    // Mappings for Firebase database
+    @GetMapping("/getJob")
+    public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException {
+        return jobService.getJob(jobId);
+    }
+
+    @PostMapping("/createJob")
+    public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException {
+        return jobService.addJob(job);
+    }
+
+    @PutMapping("/updateJob")
+    public String updateJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException {
+        return jobService.updateJob(job);
+    }
+
+    @DeleteMapping("/deleteJob")
+    public String deleteJob(@RequestParam String jobId) throws InterruptedException, ExecutionException {
+        return jobService.deleteJob(jobId);
+    }
 
 }

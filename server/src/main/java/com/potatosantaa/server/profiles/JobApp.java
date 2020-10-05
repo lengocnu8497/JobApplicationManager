@@ -20,7 +20,7 @@ public class JobApp {
         return jobID;
     }
 
-    public void setJobID(){
+    public void setJobID(String jobID){
         this.jobID = jobID;
     }
 

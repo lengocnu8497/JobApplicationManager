@@ -1,10 +1,10 @@
 package com.potatosantaa.server.services;
 import com.potatosantaa.server.profiles.JobApp;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.function.Predicate;
+// import java.util.List;
+// import java.util.function.Predicate;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -15,6 +15,7 @@ import com.google.firebase.cloud.FirestoreClient;
 // import org.springframework.stereotype.Service;
 import java.util.concurrent.ExecutionException;
 
+// CRUD Operations Service
 @Service
 public class JobService {
     public static final String COL_NAME="users";
@@ -28,9 +29,7 @@ public class JobService {
         }
     };
 
-
     public HashMap getAllJobApps(){
-
         return listOfJobApps;
     }
 
@@ -38,8 +37,6 @@ public class JobService {
       //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);
         return listOfJobApps.get(id);
     }
-
-
 
     public void addJobApp(JobApp jobApp){
         listOfJobApps.put(jobApp.getJobID(), jobApp);
@@ -52,7 +49,6 @@ public class JobService {
     public void deleteJobApp(String id){
         listOfJobApps.remove(id);
     }
-
 
     public String addJob(JobApp job) throws InterruptedException, ExecutionException {
         Firestore db = FirestoreClient.getFirestore();
