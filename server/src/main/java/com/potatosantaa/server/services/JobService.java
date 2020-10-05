@@ -1,16 +1,23 @@
 package com.potatosantaa.server.services;
-
 import com.potatosantaa.server.profiles.JobApp;
-
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
+// import org.springframework.stereotype.Service;
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class JobService {
+    public static final String COL_NAME="users";
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
@@ -46,6 +53,41 @@ public class JobService {
         listOfJobApps.remove(id);
     }
 
+
+    public String addJob(JobApp job) throws InterruptedException, ExecutionException {
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(job.getJobID()).set(job);
+        return writeResult.get().getUpdateTime().toString();
+    }
+
+    public JobApp getJob(String jobId) throws InterruptedException, ExecutionException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(COL_NAME).document(jobId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot doc = future.get();
+        
+        JobApp newJob = null;
+        if(doc.exists()){
+            newJob = doc.toObject(JobApp.class);
+            return newJob;
+        } else{
+            return null;
+        }
+
+    }
+
+    public String updateJob(JobApp job) throws InterruptedException, ExecutionException {
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(job.getJobID()).set(job);
+        return writeResult.get().getUpdateTime().toString();
+    }
+
+    public String deleteJob(String jobId){
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(jobId).delete();
+
+        return "Document with Job ID " + jobId + " has been deleted";
+    }
 
 
 }
