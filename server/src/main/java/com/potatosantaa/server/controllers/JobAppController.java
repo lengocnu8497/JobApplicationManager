@@ -3,10 +3,9 @@ package com.potatosantaa.server.controllers;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -16,13 +15,28 @@ public class JobAppController {
     JobService jobService;
 
     @GetMapping("/jobapp")
-    public List<JobApp> getAllJobApps(){
+    public HashMap getAllJobApps(){
         return jobService.getAllJobApps();
     }
 
     @GetMapping("/jobapp/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID){
         return jobService.getJobAppById(jobAppID);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
+    public void addJobApp(@RequestBody JobApp jobApp){
+        jobService.addJobApp(jobApp);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/jobapp/{id}")
+    public void updateJobApp(@RequestBody JobApp jobApp, @PathVariable("id") String jobAppID){
+        jobService.updateJobApp(jobApp, jobAppID);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/jobapp/{id}")
+    public void deleteJobApp(@PathVariable("id") String jobAppID){
+        jobService.deleteJobApp(jobAppID);
     }
 
 
