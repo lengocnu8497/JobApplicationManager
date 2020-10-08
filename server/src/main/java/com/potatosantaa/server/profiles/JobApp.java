@@ -16,6 +16,10 @@ public class JobApp {
         this.haveApplied = haveApplied;
     }
 
+    public JobApp(){
+
+    }
+
     public String getJobID(){
         return jobID;
     }
