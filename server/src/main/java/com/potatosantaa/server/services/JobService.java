@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 // CRUD Operations Service
 @Service
 public class JobService {
-    public static final String COL_NAME="users";
+    public static final String COL_NAME="jobApps";
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
@@ -53,7 +53,8 @@ public class JobService {
     public String addJob(JobApp job) throws InterruptedException, ExecutionException {
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(job.getJobID()).set(job);
-        return writeResult.get().getUpdateTime().toString();
+        return String.format("JobApp with JobID = %s is created successfully", job.getJobID());
+        // return writeResult.get().getUpdateTime().toString();
     }
 
     public JobApp getJob(String jobId) throws InterruptedException, ExecutionException {
@@ -75,14 +76,15 @@ public class JobService {
     public String updateJob(JobApp job) throws InterruptedException, ExecutionException {
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(job.getJobID()).set(job);
-        return writeResult.get().getUpdateTime().toString();
+        // return writeResult.get().getUpdateTime().toString();
+        return String.format("JobApp with JobID = %s is updated successfully", job.getJobID());
     }
 
     public String deleteJob(String jobId){
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(jobId).delete();
 
-        return "Document with Job ID " + jobId + " has been deleted";
+        return "JobApp with JobID = " + jobId + " has been deleted";
     }
 
 

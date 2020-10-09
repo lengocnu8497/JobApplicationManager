@@ -7,6 +7,10 @@ public class JobApp {
     private String jobDescription;
     private boolean haveApplied;
 
+    public JobApp(){
+
+    }
+
     public JobApp(String jobID, String jobTitle, String company, String jobDescription, boolean haveApplied) {
         super();
         this.jobID = jobID;
@@ -16,8 +20,10 @@ public class JobApp {
         this.haveApplied = haveApplied;
     }
 
-    public JobApp(){
-
+    @Override
+	public String toString() {
+        return String.format("JobApp [jobID=%s, jobTitle=%s, company=%s, jobDescription=%s, haveApplied=%s",
+        jobID, jobTitle, company, jobDescription, Boolean.toString(haveApplied));
     }
 
     public String getJobID(){
