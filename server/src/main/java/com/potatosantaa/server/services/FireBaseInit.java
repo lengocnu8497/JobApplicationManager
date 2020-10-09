@@ -10,9 +10,9 @@ import java.io.FileInputStream;
 @Service
 public class FireBaseInit {
     @PostConstruct
-    public void init(){
+    public void initialize(){
         try{
-            FileInputStream serviceAccount = new FileInputStream("./server/src/main/java/com/potatosantaa/server/firebase/jobapplicationmanager.json");
+            FileInputStream serviceAccount = new FileInputStream("./server/src/main/resources/jobapplicationmanager.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")

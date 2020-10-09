@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 // CRUD Operations Service
 @Service
 public class JobService {
-    public static final String COL_NAME="users";
+    public static final String COL_NAME="jobApps";
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
