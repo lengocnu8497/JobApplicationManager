@@ -1,6 +1,9 @@
 package com.potatosantaa.server.controllers;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
+import com.potatosantaa.server.profiles.User;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,11 @@ public class JobAppController {
 
     @Autowired
     JobService jobService;
+
+
+    User user;
+
+
 
     @GetMapping("/home")
     public HashMap getAllJobApps(){
@@ -53,8 +61,9 @@ public class JobAppController {
     }
 
     @PostMapping("/createJob")
-    public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException {
-        return jobService.addJob(job);
+    public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
+        User user = new User();
+        return jobService.addJob(job, user);
     }
 
     @PutMapping("/updateJob")
