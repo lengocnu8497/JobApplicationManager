@@ -7,6 +7,10 @@ public class JobApp {
     private String jobDescription;
     private boolean haveApplied;
 
+    public JobApp(){
+        
+    }
+
     public JobApp(String jobID, String jobTitle, String company, String jobDescription, boolean haveApplied) {
         super();
         this.jobID = jobID;
