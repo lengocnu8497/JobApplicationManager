@@ -1,5 +1,7 @@
 package com.potatosantaa.server.services;
 import com.potatosantaa.server.profiles.JobApp;
+import com.potatosantaa.server.profiles.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 // import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,15 @@ import java.util.concurrent.ExecutionException;
 // CRUD Operations Service
 @Service
 public class JobService {
-    public static final String COL_NAME="jobApps";
+    private User user;
+    //public static final String COL_NAME=user.getUID() + "/john/jobApps";
+    public final String COL_NAME=  "/jobApps";
+
+
+
+
+
+
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
@@ -50,9 +60,9 @@ public class JobService {
         listOfJobApps.remove(id);
     }
 
-    public String addJob(JobApp job) throws InterruptedException, ExecutionException {
+    public String addJob(JobApp job, User user) throws InterruptedException, ExecutionException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection(COL_NAME).document(job.getJobID()).set(job);
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + user.getUID() + COL_NAME).document(job.getJobID()).set(job);
         return writeResult.get().getUpdateTime().toString();
     }
 
