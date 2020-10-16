@@ -39,7 +39,7 @@ function ScrollTop({ children }) {
     const trigger = useScrollTrigger({ disableHysteresis: true });
 
     const handleClick = (event) => {
-      const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
+      const anchor = (event.target.ownerDocument || document).querySelector('#scroll-back-to-top');
       if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
   
@@ -106,7 +106,7 @@ export default function Header(props) {
     <React.Fragment>
       <div className={classes.root}>
         <CssBaseline /> 
-
+        <Toolbar id="scroll-back-to-top"/>
         {/* Header children components */}
         <ElevationScroll {...props}>
           <AppBar 
@@ -115,7 +115,7 @@ export default function Header(props) {
               [classes.appBarShift]: drawerOpen, 
             })}
           >
-            <Toolbar id="back-to-top-anchor">
+            <Toolbar>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -130,7 +130,7 @@ export default function Header(props) {
               <Typography variant="h6">I know, it looks ugly for now</Typography>              
               { isViewSizeBelowMedium ? null : <TopMenu/> }
             </Toolbar>
-          </AppBar>
+          </AppBar>          
         </ElevationScroll>
 
         {/* passing event handler and states to drawer child component */}
