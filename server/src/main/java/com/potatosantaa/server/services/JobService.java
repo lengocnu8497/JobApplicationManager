@@ -25,11 +25,6 @@ public class JobService {
     public final String COL_NAME=  "/jobApps";
 
 
-
-
-
-
-
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
             put("10000", new JobApp("10000", "Software Engineer", "Google", "Code some stuff.", true));

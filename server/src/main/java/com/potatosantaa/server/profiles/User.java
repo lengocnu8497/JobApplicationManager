@@ -1,3 +1,4 @@
+
 package com.potatosantaa.server.profiles;
 
 import com.google.firebase.auth.FirebaseAuth;
