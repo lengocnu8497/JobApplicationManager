@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
+/** styling */
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import { useTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+/** components from material UI */
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Fab from '@material-ui/core/Fab';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 import IconButton from '@material-ui/core/IconButton';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+/** components from material UI */
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import MenuIcon from '@material-ui/icons/Menu';
-
+/** header components */
 import SideDrawer from './SideDrawer';
 import TopMenu from './TopMenu';
+
 /**
  * @param {children} props content of the app bar component 
  * @description Elevates the app bar when scrolled down
@@ -30,16 +34,13 @@ function ElevationScroll({ children }) {
   });
 }
 
-/**
- * @param {children} props content of the app bar component 
- * @description Button pop up to scroll to the top when scrolled down
- */
+/** @description Button pop up to scroll to the top when scrolling down */
 function ScrollTop({ children }) {    
     const classes = useStyles();    
     const trigger = useScrollTrigger({ disableHysteresis: true });
 
     const handleClick = (event) => {
-      const anchor = (event.target.ownerDocument || document).querySelector('#scroll-back-to-top');
+      const anchor = (event.target.ownerDocument || document).querySelector('#scroll_back_to_top');
       if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
   
@@ -52,9 +53,7 @@ function ScrollTop({ children }) {
     );
   }
 
-/**
- * @description CSS equivalent in Material Design
- */
+/** @description Styling */
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -88,9 +87,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-/**
- * @description Header contains two children: SideDrawer and TopMenu
- */
+/** @description Header contains two children: SideDrawer and TopMenu */
 export default function Header(props) {
   const classes = useStyles(); 
   const theme = useTheme();
@@ -127,7 +124,7 @@ export default function Header(props) {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6">I know, it looks ugly for now</Typography>              
+              <Typography variant="h6">Job App Tracker</Typography>              
               { isViewSizeBelowMedium ? null : <TopMenu/> }
             </Toolbar>
           </AppBar>          
@@ -141,7 +138,7 @@ export default function Header(props) {
 
         {/* triggered function by scrolling*/}
         <ScrollTop {...props}>
-          <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <Fab color="secondary" size="small" aria-label="scroll_back_to_top">
             <KeyboardArrowUpIcon />
           </Fab>
         </ScrollTop>

@@ -1,7 +1,10 @@
 import React from 'react';
+/** styling */
 import { makeStyles } from '@material-ui/core/styles';
+/** components from material UI */
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+/** icons */
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 const useStyles = makeStyles({
@@ -13,6 +16,7 @@ const useStyles = makeStyles({
     }
 });
 
+/** modify the tab items here */
 const tabs = [
     {
         icon: <PersonPinIcon />,

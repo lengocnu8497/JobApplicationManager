@@ -1,11 +1,17 @@
 import React from 'react';
+
+/** styling */
 import clsx from 'clsx';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+/** components from material UI */
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
+
+/** icons */
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
-        whiteSpace: 'nowrap',
-      },
+        whiteSpace: 'nowrap',              
+      }, 
       drawerOpen: {
         width: drawerWidth,
         transition: theme.transitions.create('width', {
@@ -50,6 +56,27 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
+/** modify the drawer items here */
+const drawerItems = [
+  {
+    icon: <InboxIcon/>,
+    ariaLabel: "item"
+  },
+  {
+    icon: <MailIcon/>,
+    ariaLabel: "item"
+  },
+  {
+    icon: <InboxIcon/>,
+    ariaLabel: "item"
+  },
+  {
+    icon: <MailIcon/>,
+    ariaLabel: "item"
+  },
+]
+
+/** modify the tab items when screen size is below medium here */
 const tabs = [
   {
       icon: <PersonPinIcon />,
@@ -65,9 +92,7 @@ const tabs = [
   }
 ];
 
-/** 
- * @param {*} props event handler and drawer state from Header component   
- */
+/** @param {*} props event handler and drawer state from Header component */
 export default function SideDrawer({ ...props }) {
     const {
         drawerOpen,                
@@ -77,7 +102,7 @@ export default function SideDrawer({ ...props }) {
     const classes = useStyles();
     const theme = useTheme();
     
-    // detects if screen size reaches below medium
+    /** detects if screen size reaches below medium */
     const isViewSizeBelowMedium = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
@@ -94,33 +119,36 @@ export default function SideDrawer({ ...props }) {
                 }),
             }}
         >
-            <div className={classes.toolbar}>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </IconButton>
-            </div>
-            <Divider />
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                      <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>                
-            { isViewSizeBelowMedium ? (
-                <React.Fragment>
-                  <Divider />
-                  <List>
-                    {tabs.map((tab, index) => (
-                        <ListItem button key={`${tab}${index}`}>
+          <div className={classes.toolbar}>
+              <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              </IconButton>
+          </div>
+          
+          <Divider />
+
+          <List>
+            {drawerItems.map((item, index) => (
+              <ListItem button key={`${item}${index}`}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.ariaLabel} />
+              </ListItem>
+            ))}
+          </List>                
+
+          { isViewSizeBelowMedium ? (
+              <React.Fragment>
+                <Divider />
+                <List>
+                  {tabs.map((tab, index) => (
+                      <ListItem button key={`${tab}${index}`}>
                         <ListItemIcon>{tab.icon}</ListItemIcon>
                         <ListItemText primary={tab.ariaLabel} />
-                        </ListItem>
-                    ))}
-                  </List>   
-                </React.Fragment>
-            ) : null }             
+                      </ListItem>
+                  ))}
+                </List>   
+              </React.Fragment>
+          ) : null }             
         </Drawer>
     );
 }
