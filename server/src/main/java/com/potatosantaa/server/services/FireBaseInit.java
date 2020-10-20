@@ -12,7 +12,13 @@ public class FireBaseInit {
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream serviceAccount = new FileInputStream("./src/main/resources/jobapplicationmanager.json");
+            FileInputStream serviceAccount;
+            if(System.getProperty("user.dir").contains("server")){
+                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/jobapplicationmanager.json");
+            }
+            else {
+                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/server/src/main/resources/jobapplicationmanager.json");
+            }
             FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")

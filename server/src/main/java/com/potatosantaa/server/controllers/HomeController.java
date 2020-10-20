@@ -17,29 +17,13 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api")
 public class HomeController {
-    
-    String str = "Testing controller";
 
     @GetMapping("/home")
     public String getHome() {
-        return this.str;
-    }
-    @GetMapping("/stephen")
-    public String getStephenName(){
-        return "Stephen Tayag's name.";
+        return "Testing controller";
     }
 
-    @GetMapping("/nu")
-    public String getNuName(){
-        return "Nu Le's name.";
-    }
-
-    @GetMapping("/tony")
-    public String getTonyName(){
-        return "Tony Truong's name.";
-    }
-
-    @GetMapping("/stephen/a4")
+    @GetMapping("/indeed")
     public List<String> getSoftwareJobs() throws IOException {
         //web scrapes software engineering jobs from Indeed using jsoup, by Stephen Tayag
         Document doc = Jsoup.connect("https://www.indeed.com/q-Software-Engineer-jobs.html").get();

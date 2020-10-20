@@ -18,11 +18,7 @@ public class JobAppController {
 
     @Autowired
     JobService jobService;
-
-
     User user;
-
-
 
     @GetMapping("/home")
     public HashMap getAllJobApps(){
