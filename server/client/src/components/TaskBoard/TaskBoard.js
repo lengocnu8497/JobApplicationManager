@@ -10,6 +10,7 @@ import "../../styles/TaskBoard.css";
 export default class TaskBoard extends Component {
     render() {
         return (
+            /* store activities card in memory*/
             <Provider store={store}>
                 <Board />
             </Provider>

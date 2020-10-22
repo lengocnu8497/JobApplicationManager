@@ -36,7 +36,7 @@ class Activities extends Component {
       return;
     }
 
-    // Move card
+    // Move card within lists
     if (
       source.index !== destination.index ||
       source.droppableId !== destination.droppableId
