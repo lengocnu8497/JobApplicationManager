@@ -57,27 +57,27 @@ public class JobAppController {
     @GetMapping("/getJob")
     public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
 
-        User user = new User();
 
-        return jobService.getJob(jobId, user);
+
+        return jobService.getJob(jobId);
     }
 
     @PostMapping("/createJob")
     public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
-        User user = new User();
-        return jobService.addJob(job, user);
+
+        return jobService.addJob(job);
     }
 
     @PutMapping("/updateJob")
     public String updateJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
-        User user = new User();
-        return jobService.updateJob(job, user);
+
+        return jobService.updateJob(job);
     }
 
     @DeleteMapping("/deleteJob")
     public String deleteJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
-        User user = new User();
-        return jobService.deleteJob(jobId, user);
+
+        return jobService.deleteJob(jobId);
     }
 
 }

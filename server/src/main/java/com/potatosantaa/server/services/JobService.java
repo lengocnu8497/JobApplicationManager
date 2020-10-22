@@ -22,8 +22,10 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class JobService {
 
-    //public static final String COL_NAME=user.getUID() + "/john/jobApps";
+
     public final String COL_NAME=  "/jobApps";
+    User user;
+
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
@@ -36,6 +38,18 @@ public class JobService {
 
     public JobService() throws FirebaseAuthException {
     }
+
+    private User getUser() throws FirebaseAuthException {
+        if (user == null){
+            user = new User();
+        }
+
+        return user;
+    }
+
+
+
+
 
     public HashMap getAllJobApps(){
         return listOfJobApps;
@@ -58,15 +72,15 @@ public class JobService {
         listOfJobApps.remove(id);
     }
 
-    public String addJob(JobApp job, User user) throws InterruptedException, ExecutionException {
+    public String addJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + user.getUID() + COL_NAME).document(job.getJobID()).set(job);
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(job.getJobID()).set(job);
         return writeResult.get().getUpdateTime().toString();
     }
 
-    public JobApp getJob(String jobId, User user) throws InterruptedException, ExecutionException {
+    public JobApp getJob(String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection("Users/" + user.getUID() + COL_NAME).document(jobId);
+        DocumentReference docRef = db.collection("Users/" + getUser().getUID() + COL_NAME).document(jobId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot doc = future.get();
         
@@ -80,15 +94,15 @@ public class JobService {
 
     }
 
-    public String updateJob(JobApp job, User user) throws InterruptedException, ExecutionException {
+    public String updateJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + user.getUID() + COL_NAME).document(job.getJobID()).set(job);
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(job.getJobID()).set(job);
         return writeResult.get().getUpdateTime().toString();
     }
 
-    public String deleteJob(String jobId, User user){
+    public String deleteJob(String jobId) throws FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + user.getUID() + COL_NAME).document(jobId).delete();
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(jobId).delete();
 
         return "Document with Job ID " + jobId + " has been deleted";
     }
