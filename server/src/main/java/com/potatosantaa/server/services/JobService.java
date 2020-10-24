@@ -39,18 +39,6 @@ public class JobService {
     public JobService() throws FirebaseAuthException {
     }
 
-    private User getUser() throws FirebaseAuthException {
-        if (user == null){
-            user = new User();
-        }
-
-        return user;
-    }
-
-
-
-
-
     public HashMap getAllJobApps(){
         return listOfJobApps;
     }
@@ -74,13 +62,13 @@ public class JobService {
 
     public String addJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(job.getJobID()).set(job);
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(job.getJobID()).set(job);
         return writeResult.get().getUpdateTime().toString();
     }
 
     public JobApp getJob(String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection("Users/" + getUser().getUID() + COL_NAME).document(jobId);
+        DocumentReference docRef = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(jobId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot doc = future.get();
         
@@ -96,13 +84,13 @@ public class JobService {
 
     public String updateJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(job.getJobID()).set(job);
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(job.getJobID()).set(job);
         return writeResult.get().getUpdateTime().toString();
     }
 
     public String deleteJob(String jobId) throws FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("Users/" + getUser().getUID() + COL_NAME).document(jobId).delete();
+        ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(jobId).delete();
 
         return "Document with Job ID " + jobId + " has been deleted";
     }

@@ -5,27 +5,40 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
 
 @Service
 public class FireBaseInit {
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream serviceAccount;
+         //   FileInputStream serviceAccount;
+//            InputStream serviceAccount1 =
+//                    this.getClass().getResourceAsStream("/jobapplicationmanager.json");
+            InputStream serviceAccount1 = null;
 
-            if(System.getProperty("user.dir").contains("server")){
-                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/jobapplicationmanager.json");
-
-            }
-            else {
-                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/server/src/main/resources/jobapplicationmanager.json");
-            }
+                File f = new File("/jobapplicationmanager.json");
+                if (f.exists()){
+                    serviceAccount1 = new FileInputStream(f);
+                } else {
+                    URL url = this.getClass().getResource("/jobapplicationmanager.json");
+                    serviceAccount1  = url.openConnection().getInputStream();
+                }
+//            if(System.getProperty("user.dir").contains("server")){
+//                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/jobapplicationmanager.json");
+//
+//            }
+//            else {
+//                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/server/src/main/resources/jobapplicationmanager.json");
+//            }
             FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount1))
                 .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")
                 .build();
+
 
             FirebaseApp.initializeApp(options);
         } catch (Exception e){
