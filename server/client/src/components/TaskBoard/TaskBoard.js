@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Board from "./Board";
 
@@ -7,13 +7,13 @@ import store from "../store";
 
 import "../../styles/TaskBoard.css";
 
-export default class TaskBoard extends Component {
-    render() {
-        return (
-            /* store activities card in memory*/
-            <Provider store={store}>
-                <Board />
-            </Provider>
-        );
-    }
+const TaskBoard = () => {
+    return (
+        <Provider store={store}>
+            <Board />
+        </Provider>
+    );
+    
 }
+
+export default TaskBoard;
