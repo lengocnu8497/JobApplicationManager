@@ -8,6 +8,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.jar.JarOutputStream;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -20,12 +21,28 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.core.ApiFuture;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.*;
 import com.google.api.services.gmail.model.Thread;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.cloud.FirestoreClient;
+import com.potatosantaa.server.profiles.JobApp;
+import com.potatosantaa.server.profiles.User;
 import io.restassured.path.json.JsonPath;
 import org.codehaus.groovy.util.ListHashMap;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 public class GmailAPI {
     private static final String APPLICATION_NAME = "JobApplicationManager";
@@ -105,9 +122,9 @@ public class GmailAPI {
     public static Message getMessage(Gmail service, String userId, List<Message> messages, int index)
             throws IOException {
         Message message = service.users().messages().get(userId, messages.get(index).getId()).execute();
-        System.out.println("Message to string: ");
-        System.out.println(message.toPrettyString());
-        System.out.println("------------------------------------");
+//        System.out.println("Message to string: ");
+//        System.out.println(message.toPrettyString());
+//        System.out.println("------------------------------------");
         return message;
     }
     public static List<HashMap<String, String>> getGmailData(String query) {
@@ -133,8 +150,6 @@ public class GmailAPI {
                     }
                 }
 
-
-
                 HashMap<String, String> hm = new HashMap<String, String>();
                 hm.put("subject", subject);
                 hm.put("body", body);
@@ -145,12 +160,6 @@ public class GmailAPI {
 
 
             }
-
-
-
-
-
-
 
             return hmSet;
         } catch (Exception e) {
@@ -225,13 +234,35 @@ public class GmailAPI {
     }
 
 
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
+
+    public static void firebaseInit(){
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("/jobapplicationmanager.json").getInputStream()))
+                    .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")
+                    .build();
+            if(FirebaseApp.getApps().isEmpty()) { //<--- check with this line
+                FirebaseApp.initializeApp(options);
+            }
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws IOException, GeneralSecurityException, FirebaseAuthException, ExecutionException, InterruptedException {
         //here you choose what to search your gmail for. We want to search for specific companies after a certain day (since the last time i opened app..?)
         //List<HashMap<String, String>> hmSet = getGmailData("from:firebase-noreply@google.com");
-        List<HashMap<String, String>> hmSet = getGmailData("amazon web services");
+        firebaseInit(); //idk if we have to do this, but i get an error if we don't
+        JobService jobService = new JobService();
+        JobApp newJob = jobService.getJob(String.valueOf(91210)); //hardcoded a jobID here, eventually want to search through all of a user's job applications
 
+        List<HashMap<String, String>> hmSet = getGmailData(newJob.getCompany());
+        //List<HashMap<String, String>> hmSet = getGmailData("from:firebase-noreply@google.com");
 
         for (HashMap hm : hmSet){
+            System.out.println();
+            System.out.println();
             System.out.println("===================================================");
             System.out.println(hm.get("subject"));
             System.out.println("=================");
@@ -240,11 +271,14 @@ public class GmailAPI {
             System.out.println(hm.get("link"));
 
             System.out.println("=================");
-            //System.out.println("Total count of emails is :"+getTotalCountOfMails());
+            System.out.println("Total count of emails is :"+getTotalCountOfMails());
 
             System.out.println("=================");
             boolean exist = isMailExist("gmail api test");
             System.out.println("title exist or not: " + exist);
+            System.out.println("===================================================");
+            System.out.println();
+            System.out.println();
         }
 
 
