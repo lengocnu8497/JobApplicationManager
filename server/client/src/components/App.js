@@ -10,26 +10,28 @@ import { CookiesProvider } from 'react-cookie';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        { /* Unauthenticated view */ }
-        <Route exact path={["/"]}>
-            <Route exact path='/' component={SignIn}/>                                     
-        </Route>
-        { /* Authenticated view */ }
-        <Route exact path={["/task", "/kanban" ]}>
-          <Header/>
-            <Switch>
-                <Route exact path='/task' component={TaskBoard}/> 
-                <Route exact path='/kanban' component={Kanban}/>                                       
-            </Switch>
-          <Footer/>                                      
-        </Route>
-        { /* Wrong url view */ }
-        <Route path="*" component={NotFoundPage}/>
+    <CookiesProvider>
+      <BrowserRouter>
+        <Switch>
+          { /* Unauthenticated view */ }
+          <Route exact path={["/"]}>
+              <Route exact path='/' component={SignIn}/>                                     
+          </Route>
+          { /* Authenticated view */ }
+          <Route exact path={["/task", "/kanban" ]}>
+            <Header/>
+              <Switch>
+                  <Route exact path='/task' component={TaskBoard}/> 
+                  <Route exact path='/kanban' component={Kanban}/>                                       
+              </Switch>
+            <Footer/>                                      
+          </Route>
+          { /* Wrong url view */ }
+          <Route path="*" component={NotFoundPage}/>
 
-      </Switch>
-    </BrowserRouter>
+        </Switch>
+      </BrowserRouter>
+    </CookiesProvider>
   );
 }
 

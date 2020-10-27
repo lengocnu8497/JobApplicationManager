@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 import { useCookies } from 'react-cookie';
 
@@ -48,17 +49,14 @@ const Auth = () => {
    
 
     return (
-        <Container maxWidth="sm">
-            <h2 className={styles.logo}>advisor view</h2>
-            <div className={styles.form}>
+        <Container maxWidth="md" className={styles.container}>
+             {isLoginView ? <h2>Signup</h2> : <h2>Login</h2>}
                 <TextField
                     required 
                     id="standard-required" 
                     label="Username" 
                     onChange={event => setUsername(event.target.value)}
                 />
-            </div>
-            <form className={styles.form}>
                 <TextField
                     id="standard-password-input"
                     label="Password"
@@ -66,26 +64,25 @@ const Auth = () => {
                     autoComplete="current-password" 
                     onChange={event => setPassword(event.target.value)}    
                 />
-            </form>
-            <div  className={styles.button} >
                 {isLoginView ?
                     <Button 
-                        size="medium"
+                        size="small"
                         variant="contained"
                         onClick={registerClicked} 
+                        className={styles.button}
                     >
                         Register
                     </Button> 
                     :
                     <Button 
-                    size="medium"
+                    size="small"
                     variant="contained"
                     onClick={loginClicked} 
+                    className={styles.button}
                     >
-                        Log in
+                        Sign in
                     </Button> 
                 }
-            </div>  
             {isLoginView ?
                     <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(false)}>Already have an account? Login here.</p>:
                     <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(true)}>Don't have an account? Register here.</p>
@@ -95,29 +92,20 @@ const Auth = () => {
 }
 
 const useStyles = makeStyles({
-    landingContent: {
-        position: 'relative',
-        backgroundColor: '#e0e0e0',
-        width: '100%',
-        height: '50vh',
+    container: {
+        height: '95vh', 
         display: 'flex',
-        flexDirection: 'column',     
-    },
-    logo: {
-        textAlign: 'center',  
-        fontWeight: '600', 
-    },
-    form: {
-        paddingTop: '10px',
-        paddingLeft: '250px',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#3f51b5',
     },
     button: {
-        paddingTop: '30px',
-        paddingLeft: '300px',
+        marginTop: '30px',
+        color: '#3f51b5',
     },
     p: {
-        paddingTop: '5px',
-        paddingLeft: '220px',
+        marginTop: '30px',
     },
 });
 
